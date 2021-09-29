@@ -67,55 +67,60 @@ function App() {
 
   return (
     <div className="App">
-      <h2> Add Friend </h2>
-      <form onSubmit={handleSubmit} >
-        <label htmlFor="name">Name:</label>
-        <input value={name} onChange={handleNameChange} />
-        <button type="submit" className={name.length ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
-      </form>
-      {isAlreadyExist ? <span className="error" > Name is already exist, Please enter another name </span> : null}
+      <div className="top-sec">
+        <div className="top-sec-inner">
+          <h2> Add Friend </h2>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Name:</label>
+              <div className="field-rep">
+                <input value={name} onChange={handleNameChange} />
+                <button type="submit" className={name.length ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
+              </div>
+          </form>
+          {isAlreadyExist ? <span className="error" > Name is already exist, Please enter another name </span> : null}
+        </div>
+      </div>
 
-      <hr />
-
-      <div className="table-container" >
-        <h2> Friends List </h2>
-        <label htmlFor="Search">Search:</label>
-        <input value={search} onChange={handleSearch} />
-
-        <table className="styled-table" >
-          <thead>
-            <tr>
-              <th>SR NO.</th>
-              <th>NAME</th>
-              <th>ACTION</th>
-            </tr>
-          </thead>
-          {data.length ?
-            data && data.map((friend, i) => {
-              const { name = "-", favourite = false } = friend || {}
-              return <tbody key={i}>
+      <div className="table-container">
+        <div className="table-container-inner">
+          <div className="friend-list">
+            <h2> Friends List </h2>
+            <label htmlFor="Search">Search:</label>
+            <input value={search} onChange={handleSearch} />
+          </div>
+          <div className="cus-table">
+            <table className="styled-table">
+              <thead>
                 <tr>
-                  <td>{i + 1}. </ td>
-                  <td>
-                    {name}
-                    <span></span>
-                  </ td>
-                  <td>
-                    <img onClick={() => changeFavourite(i)} src={favourite ? yellowStart : start} alt="" />
-                    <img onClick={() => deleteFriendModal(i)} src={deleteIcon} alt="" />
-                  </td>
+                  <th>SR NO.</th>
+                  <th>NAME</th>
+                  <th>ACTION</th>
                 </tr>
-              </tbody>
-            }) :
-
-            <tbody  >
-              <td colSpan={3} className="no-data" > No Data</td>
-            </tbody>
-
-          }
-        </table>
-
-        {/* } */}
+              </thead>
+              {data.length ?
+                data && data.map((friend, i) => {
+                  const { name = "-", favourite = false } = friend || {}
+                  return <tbody key={i}>
+                    <tr>
+                      <td>{i + 1}. </ td>
+                      <td>
+                        {name}
+                        <span></span>
+                      </ td>
+                      <td>
+                        <img onClick={() => changeFavourite(i)} src={favourite ? yellowStart : start} alt="" />
+                        <img onClick={() => deleteFriendModal(i)} src={deleteIcon} alt="" />
+                      </td>
+                    </tr>
+                  </tbody>
+                }) :
+                <tbody>
+                  <td colSpan={3} className="no-data" > No Data</td>
+                </tbody>
+              }
+            </table>
+          </div>
+        </div>
       </div>
 
       {openDeleteModal ?
