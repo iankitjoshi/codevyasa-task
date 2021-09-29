@@ -190,6 +190,9 @@ input{
           font-weight: 600;
           color: #444;
           padding: 12px 20px;
+          p{
+            font-size: 10px;
+          }
           img{
             height: 30px;
             cursor: pointer;
@@ -216,5 +219,25 @@ input{
         }
       }
     }
+  }
+}
+
+
+.pagination-head{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 15px 0px;
+  span{
+    padding: 0px 5px;
+    color: #009879;
+    font-weight: 600;
+  }
+  button{
+    background-color: #009879;
+    color: white;
+    padding: 7px;
+    width: 90px !important;
+    height: 28px !important;
   }
 }
