@@ -14,15 +14,23 @@ function App() {
     const [search, setSearch] = useState('')
     const [filterFriend, setFilterFriend] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
+    const [dataPerPage, setDataInPage] = useState(4)
+    const [selectedFriend, setSelectedFriend] = useState('')
+    const [errors, serErrors] = useState('')
 
     const handleNameChange = (e) => {
         const { value = "" } = e.target
         setName(value)
         setIsAlreadyExist(false)
+        serErrors('')
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (!/\S/.test(name)){
+            serErrors('Please enter valid name')
+            return
+        }
         const isAlreadyExist = friends.some(friend => friend.name == name)
         if (isAlreadyExist) {
             setIsAlreadyExist(isAlreadyExist)
@@ -39,11 +47,15 @@ function App() {
         })
         newFriendsList = newFriendsList.sort((a, b) => b.favourite - a.favourite);
         setFriends(newFriendsList)
+        setCurrentPage(1)
+        setSearch('')
     }
 
-    const deleteFriendModal = (id) => {
+    const deleteFriendModal = (friend) => {
+        const { id = "", name = "" } = friend
         setOpenDeleteModal(true)
         setFriendId(id)
+        setSelectedFriend(name)
     }
 
     const deleteFriend = () => {
@@ -51,11 +63,14 @@ function App() {
         setFriends(deleteFriend)
         setOpenDeleteModal(false)
         setFriendId(null)
+        setCurrentPage(1)
+        setSearch('')
     }
 
     const closeModal = () => {
         setOpenDeleteModal(false)
         setFriendId(null)
+        setSelectedFriend('')
     }
 
     const handleSearch = (e) => {
@@ -68,23 +83,20 @@ function App() {
 
     const previousPageHandle = () => {
         if (currentPage === 1) return;
-
         setCurrentPage(currentPage - 1);
     }
 
     const nextPageHandle = () => {
         let data = search.length ? filterFriend : friends;
-        let totalPage = Math.ceil((data.length) / 4);
+        let totalPage = Math.ceil((data.length) / dataPerPage);
         if (currentPage === totalPage) return;
-
         setCurrentPage(currentPage + 1);
     }
 
     let data = search.length ? filterFriend : friends;
-    let totalPage = Math.ceil((data.length) / 4);
-    let totalResult = filterFriend.length > 0 ? filterFriend.length : friends.length;
-
-    data = data.slice((currentPage - 1) * 4, ((currentPage - 1) * 4) + 4);
+    let totalPage = Math.ceil((data.length) / dataPerPage);
+    let totalResult = search.length ? filterFriend.length : friends.length;
+    data = data.slice((currentPage - 1) * dataPerPage, ((currentPage - 1) * dataPerPage) + dataPerPage);
 
     return (
         <div className="App">
@@ -94,11 +106,12 @@ function App() {
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="name">Name:</label>
                         <div className="field-rep">
-                            <input value={name} maxLength="40" onChange={handleNameChange} />
+                            <input value={name} maxLength="40" placeholder="Enter your friend's name" onChange={handleNameChange} />
                             <button type="submit" className={/\S/.test(name) ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
                         </div>
                     </form>
                     {isAlreadyExist ? <span className="error" > Name is already exist, Please enter another name </span> : null}
+                    {errors ? <span className="error" > {errors} </span> : null}
                 </div>
             </div>
 
@@ -107,7 +120,7 @@ function App() {
                     <div className="friend-list">
                         <h2> Friends List </h2>
                         <label htmlFor="Search">Search:</label>
-                        <input value={search} maxLength="30" onChange={handleSearch} />
+                        <input type="search" value={search} maxLength="30" placeholder="Search your friend's name" onChange={handleSearch} />
                     </div>
                     <div className="cus-table">
                         <table className="styled-table">
@@ -123,27 +136,27 @@ function App() {
                                     const { name = "-", favourite = false, id = "" } = friend || {}
                                     return <tbody key={id}>
                                         <tr>
-                                            <td>{((currentPage - 1) * 4) + (i + 1)}. </ td>
+                                            <td>{((currentPage - 1) * dataPerPage) + (i + 1)}. </ td>
                                             <td>
                                                 {name}
-                                                <p>{`is my ${favourite ? 'favourite' : ''} friend.`} </p>
+                                                <p>{`is your ${favourite ? 'favourite' : ''} friend.`} </p>
                                             </ td>
                                             <td>
                                                 <img onClick={() => changeFavourite(id)} src={favourite ? yellowStart : start} alt="" />
-                                                {favourite ? null : <img onClick={() => deleteFriendModal(id)} src={deleteIcon} alt="" />}
+                                                {favourite ? null : <img onClick={() => deleteFriendModal(friend)} src={deleteIcon} alt="" />}
                                             </td>
                                         </tr>
                                     </tbody>
                                 }) :
                                 <tbody>
-                                    <td colSpan={3} className="no-data" > No Data</td>
+                                    <td colSpan={3} className="no-data" > No Friends</td>
                                 </tbody>
                             }
                         </table>
                         <Pagination
                             currentPage={currentPage}
                             totalPage={totalPage || 1}
-                            showData={4}
+                            showData={dataPerPage}
                             totalData={totalResult || 0}
                             previousPageHandle={previousPageHandle}
                             nextPageHandle={nextPageHandle}
@@ -155,9 +168,9 @@ function App() {
             {openDeleteModal ?
                 <div className="delete-modal-inner">
                     <div className="delete-modal">
-                        <h3>Are you sure you want to delete?</h3>
-                        <button onClick={closeModal} className="closeModal-btn" > Close </button>
-                        <button onClick={() => deleteFriend()} className="delete-btn" > Delete </button>
+                        <h3>{`Are you sure you want to remove ${selectedFriend} from your friend list?`}</h3>
+                        <button onClick={closeModal} className="closeModal-btn" > No, Cancel </button>
+                        <button onClick={() => deleteFriend()} className="delete-btn" > Yes, Remove </button>
                     </div>
                 </div>
                 :
