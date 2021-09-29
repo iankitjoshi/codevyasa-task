@@ -95,7 +95,7 @@ function App() {
                         <label htmlFor="name">Name:</label>
                         <div className="field-rep">
                             <input value={name} maxLength="40" onChange={handleNameChange} />
-                            <button type="submit" className={name.length ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
+                            <button type="submit" className={/\S/.test(name) ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
                         </div>
                     </form>
                     {isAlreadyExist ? <span className="error" > Name is already exist, Please enter another name </span> : null}
