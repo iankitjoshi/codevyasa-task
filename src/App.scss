@@ -1,0 +1,109 @@
+.App {
+  text-align: center;
+}
+
+@mixin button{
+  color: #fff ;
+	text-transform: uppercase;
+	background: #60a3bc;
+	padding: 10px;
+  width: 100px;
+	border-radius: 50px;
+	border: none;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+label{
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+input{
+  height: 30px;
+  border-radius: 5px;
+}
+
+.disabled{
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+hr{
+  margin: 50px 0 20px 0;
+}
+
+img{
+  height: 20px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0 5px 0 5px;
+}
+
+.closeModal-btn{
+  @include button;
+	background: #ffffff;
+  border: 1px solid black;
+  color: black !important;
+  font-size: 15px
+}
+
+.delete-btn{
+  @include button;
+	background: #c93d3d;
+}
+
+.submit-btn{
+  @include button;
+}
+
+.delete-modal{
+    border: 1px solid;
+    padding: 20px;
+    width: 30%;
+    border-radius: 15px;
+    margin: auto;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: auto;
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.table-container{
+  margin-top: 30px;
+}
+
+.error{
+  color: red;
+  font-size: 13px;
+}
