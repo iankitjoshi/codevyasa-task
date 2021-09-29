@@ -59,12 +59,30 @@ img{
   @include button;
 }
 
+.delete-modal-inner {
+  width: 100%;
+  display: inline-block;
+  position: fixed;
+  background: rgba(0,0,0,0.6);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
 .delete-modal{
-    border: 1px solid;
-    padding: 20px;
-    width: 30%;
-    border-radius: 15px;
-    margin: auto;
+  border: 1px solid;
+  padding: 20px;
+  width: 400px;
+  border-radius: 15px;
+  margin: auto;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 110px;
 }
 
 .styled-table {
@@ -107,3 +125,4 @@ img{
   color: red;
   font-size: 13px;
 }
+

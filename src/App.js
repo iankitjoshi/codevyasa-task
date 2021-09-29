@@ -111,10 +111,12 @@ function App() {
       </div>
 
       { openDeleteModal ?
-        <div className="delete-modal" >
-          <h3>Are you sure you want to delete?</h3>
-          <button onClick={closeModal} className="closeModal-btn" > Close </button>
-          <button onClick={() => deleteFriend()} className="delete-btn" > Delete </button>
+        <div className="delete-modal-inner">
+          <div className="delete-modal">
+            <h3>Are you sure you want to delete?</h3>
+            <button onClick={closeModal} className="closeModal-btn" > Close </button>
+            <button onClick={() => deleteFriend()} className="delete-btn" > Delete </button>
+          </div>
         </div>
         :
         null
