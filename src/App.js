@@ -11,9 +11,10 @@ function App() {
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [friendId, setFriendId] = useState(null)
   const [search, setSearch] = useState('')
+  const [filterFriend, setFilterFriend] = useState([])
 
   const handleNameChange = (e) => {
-    const {value = ""} = e.target
+    const { value = "" } = e.target
     setName(value)
     setIsAlreadyExist(false)
   }
@@ -21,18 +22,18 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const isAlreadyExist = friends.some(friend => friend.name == name)
-    if (isAlreadyExist){
-      setIsAlreadyExist(isAlreadyExist) 
-    }else{
-      setFriends([...friends, { name, favourite: false } ])
+    if (isAlreadyExist) {
+      setIsAlreadyExist(isAlreadyExist)
+    } else {
+      setFriends([...friends, { name, favourite: false }])
       setName('')
     }
   }
 
   const changeFavourite = (id) => {
-    let newFriendsList = friends.map((friend,index) => {
-      if(id == index ) return { ...friend, favourite: !friend.favourite }
-        return friend
+    let newFriendsList = friends.map((friend, index) => {
+      if (id == index) return { ...friend, favourite: !friend.favourite }
+      return friend
     })
     setFriends(newFriendsList)
   }
@@ -55,11 +56,14 @@ function App() {
   }
 
   const handleSearch = (e) => {
-    const {value = ""} = e.target
+
+    const { value = "" } = e.target
     setSearch(value)
-    let searchFriends = friends.filter(friend => friend.name.includes(value))
-    setFriends(searchFriends)
+    let searchFriends = friends.filter(friend => friend.name.toLowerCase().includes(value))
+    setFilterFriend(searchFriends)
   }
+
+  let data = search.length ? filterFriend : friends;
 
   return (
     <div className="App">
@@ -69,8 +73,8 @@ function App() {
         <input value={name} onChange={handleNameChange} />
         <button type="submit" className={name.length ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
       </form>
-        {isAlreadyExist ? <span className="error" > Name is already exist, Please enter another name </span> : null }
-      
+      {isAlreadyExist ? <span className="error" > Name is already exist, Please enter another name </span> : null}
+
       <hr />
 
       <div className="table-container" >
@@ -78,39 +82,43 @@ function App() {
         <label htmlFor="Search">Search:</label>
         <input value={search} onChange={handleSearch} />
 
-      {friends.length ?
         <table className="styled-table" >
-            <thead>
-              <tr>
-                <th>SR NO.</th>
-                <th>NAME</th>
-                <th>ACTION</th>
-              </tr>
-            </thead>
-        {
-          friends && friends.map((friend,i) => {
-                const { name = "-", favourite = false } = friend || {}
-            return <tbody key={i}>
-                  <tr>
-                    <td>{i+1}. </ td>
-                    <td>
-                      {name} 
-                      <span></span>
-                     </ td>
-                    <td> 
-                      <img onClick={() => changeFavourite(i)} src={ favourite ? yellowStart : start} /> 
-                      <img onClick={() => deleteFriendModal(i)} src={deleteIcon} />
-                    </td>
-                  </tr>
-                </tbody>
-            }) 
-          }
-      </table> : null
+          <thead>
+            <tr>
+              <th>SR NO.</th>
+              <th>NAME</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          {data.length ?
+            data && data.map((friend, i) => {
+              const { name = "-", favourite = false } = friend || {}
+              return <tbody key={i}>
+                <tr>
+                  <td>{i + 1}. </ td>
+                  <td>
+                    {name}
+                    <span></span>
+                  </ td>
+                  <td>
+                    <img onClick={() => changeFavourite(i)} src={favourite ? yellowStart : start} alt="" />
+                    <img onClick={() => deleteFriendModal(i)} src={deleteIcon} alt="" />
+                  </td>
+                </tr>
+              </tbody>
+            }) :
 
-      }
+            <tbody  >
+              <td colSpan={3} className="no-data" > No Data</td>
+            </tbody>
+
+          }
+        </table>
+
+        {/* } */}
       </div>
 
-      { openDeleteModal ?
+      {openDeleteModal ?
         <div className="delete-modal-inner">
           <div className="delete-modal">
             <h3>Are you sure you want to delete?</h3>
@@ -121,7 +129,7 @@ function App() {
         :
         null
       }
-      
+
     </div>
   );
 }
