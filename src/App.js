@@ -31,7 +31,7 @@ function App() {
             serErrors('Please enter valid name')
             return
         }
-        const isAlreadyExist = friends.some(friend => friend.name == name)
+        const isAlreadyExist = friends.some(friend => friend.name.toLowerCase() == name.toLowerCase())
         if (isAlreadyExist) {
             setIsAlreadyExist(isAlreadyExist)
         } else {
@@ -76,7 +76,7 @@ function App() {
     const handleSearch = (e) => {
         const { value = "" } = e.target
         setSearch(value)
-        let searchFriends = friends.filter(friend => friend.name.toLowerCase().includes(value))
+        let searchFriends = friends.filter(friend => friend.name.toLowerCase().includes(value.toLowerCase()))
         setFilterFriend(searchFriends);
         setCurrentPage(1)
     }
