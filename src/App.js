@@ -65,6 +65,8 @@ function App() {
         setFriendId(null)
         setCurrentPage(1)
         setSearch('')
+        setName('')
+        setIsAlreadyExist(false)
     }
 
     const closeModal = () => {
