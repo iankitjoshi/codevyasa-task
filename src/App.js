@@ -118,7 +118,7 @@ function App() {
             <div className="table-container">
                 <div className="table-container-inner">
                     <div className="friend-list">
-                        <h2> Friends List </h2>
+                        <h2> Friend's List </h2>
                         <label htmlFor="Search">Search:</label>
                         <input type="search" value={search} maxLength="30" placeholder="Search your friend's name" onChange={handleSearch} />
                     </div>
@@ -126,7 +126,7 @@ function App() {
                         <table className="styled-table">
                             <thead>
                                 <tr>
-                                    <th>SR NO.</th>
+                                    <th>S NO.</th>
                                     <th>NAME</th>
                                     <th>ACTION</th>
                                 </tr>
