@@ -99,8 +99,9 @@ input{
 }
 
 .error{
-  color: #ff0000;
-  font-size: 13px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .top-sec {
@@ -229,7 +230,7 @@ input{
   justify-content: flex-end;
   margin: 15px 0px;
   span{
-    padding: 0px 5px;
+    padding: 0px 10px;
     color: #009879;
     font-weight: 600;
   }

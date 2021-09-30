@@ -28,7 +28,7 @@ function App() {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!/\S/.test(name)){
-            serErrors('Please enter valid name')
+            serErrors('* Please enter valid name')
             return
         }
         const isAlreadyExist = friends.some(friend => friend.name.toLowerCase() == name.toLowerCase())
@@ -110,7 +110,7 @@ function App() {
                             <button type="submit" className={/\S/.test(name) ? 'submit-btn' : 'submit-btn disabled'} >Submit</button>
                         </div>
                     </form>
-                    {isAlreadyExist ? <span className="error" >Friend name is already exist, Please enter another name. </span> : null}
+                    {isAlreadyExist ? <span className="error" >* Friend's name is already exist, Please enter another name. </span> : null}
                     {errors ? <span className="error" > {errors} </span> : null}
                 </div>
             </div>
